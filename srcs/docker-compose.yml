@@ -1,0 +1,16 @@
+version: '2.28.1' #to be changed
+
+services:
+  nginx:
+    build: ./requirements/nginx
+    ports:
+      - "443:443"
+      - "8080:80"
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge
+
+
