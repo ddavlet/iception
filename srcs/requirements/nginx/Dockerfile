@@ -2,16 +2,18 @@
 FROM alpine
 
 # Install OpenSSL to handle TLS
-RUN apk update && apk add --no-cache nginx openssl
+RUN apk update && apk add --no-cache nginx openssl tini && \
+	mkdir -p /etc/ssl/certs \ && openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+		-keyout /etc/ssl/certs/server.key -out /etc/ssl/certs/server.crt \
+		-subj "/C=GE/ST=Berlin/L=Berlin/O=42Berlin/OU=Student/CN=ddavlety.42.fr" && \
+	rm -rf /var/cache/apk/*
+
+ENTRYPOINT ["/sbin/tini", "--"]
 
 # Copy NGINX configuration file
 COPY nginx.conf /etc/nginx/http.d/default.conf
 
 # Create SSL sertificates
-RUN mkdir -p /etc/ssl/certs \ && openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-		-keyout /etc/ssl/certs/server.key -out /etc/ssl/certs/server.crt \
-		-subj "/C=GE/ST=Berlin/L=Berlin/O=42Berlin/OU=Student/CN=ddavlety.42.fr"
-
 
 # Copy SSL certificates
 # COPY certs/server.crt /etc/ssl/certs/server.crt
@@ -19,6 +21,9 @@ RUN mkdir -p /etc/ssl/certs \ && openssl req -x509 -nodes -days 365 -newkey rsa:
 
 # Expose port 443 for HTTPS
 EXPOSE 443 80
+
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
+    CMD curl -f https://localhost || exit 1
 
 # Start NGINX
 CMD ["nginx", "-g", "daemon off;"]
