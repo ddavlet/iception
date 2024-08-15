@@ -1,40 +1,60 @@
-# version: '2.28.1' #to be changed
+version: '2.28.1'
+
 name: inception
 
 services:
   nginx:
+    container_name: nginx
     build: ./requirements/nginx
     ports:
       - "443:443"
-      - "8080:80"
     networks:
       - net_inception
-    # depends_on:
-    #   wordpress:
-    #     condition: service_healthy
+    depends_on:
+      - wordpress
+      - mariadb
     env_file:
-      - path: ./nginx.env
+      - path: .env
         required: true
 
     # secrets:
     #   - server-certificate
     restart: on-failure:3
     volumes:
-      - db-data:/var/lib/data #to be changed
+      - wordpress_data:/var/www/localhost/htdocs/wordpress #to be changed
 
 
   wordpress:
-    build: :./requirements/wordpress
-    ports:
-      -
+    container_name: wordpress
+    build: ./requirements/wordpress
+    networks:
+      - net_inception
+    restart: on-failure:3
+    volumes:
+      - wordpress_data:/var/www/localhost/htdocs/wordpress
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    networks:
+      - net_inception
+    restart: on-failure:3
+    secrets:
+      - mariadb-secrets
+    volumes:
+      - db-data:/var/lib/mysql
 
 networks:
   net_inception:
     driver: bridge
 
-# secrets:
+secrets:
+  mariadb-secrets:
+    file: ./requirements/mariadb/secrets.txt
 #   server-certificate:
 #     file: ./server.cert
 
 volumes:
   db-data:
+    name: db-data
+  wordpress_data:
+    name: wp-data
