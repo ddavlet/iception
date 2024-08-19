@@ -34,7 +34,16 @@ services:
       - wordpress_data:/var/www/localhost/htdocs/wordpress
   mariadb:
     container_name: mariadb
-    build: ./requirements/mariadb
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+      args:
+        DB_NAME: ${DB_NAME}
+        DB_ADMN: ${DB_ADMN}
+        DB_USER: ${DB_USER}
+        DB_USRPWD: ${DB_USRPWD}
+        DB_ADMNPWD: ${DB_ADMNPWD}
+        DB_RTPWD: ${DB_RTPWD}
     networks:
       - net_inception
     restart: on-failure:3

@@ -1,16 +1,18 @@
-#!/bin/bash
+#!/bin/sh
 
-mkdir -p /var/lib/mysql/
+#if mysql (settings folder for mariadb) is not installed
+if [ ! -d "/var/lib/mysql/ibdata1" ]; then
+    #set owenership of the folder
+    chown -R mysql:mysql /var/lib/mysql
+    chmod 755 /var/lib/mysql
+    #init mariadb settings, --rmp install mode for linux based systems
+    mysql_install_db --datadir=/var/lib/mysql --user=mysql --rpm
+fi
 
-chown -R mysql:mysql /var/lib/mysql
-
-# chown -R mysql:mysql /var/lib/mysql
-# service mysql start
-mysqld
-# /etc/init.d/mariadb setup
-# rc-service mariadb start
-# Define SQL commands for initialization
-cat << EOF > /tmp/db.sql
+if [ ! -d "/var/lib/mysql/wordpress" ]; then
+    cat << EOF > /tmp/db.sql
+# Delete test database
+DROP DATABASE IF EXISTS test;
 CREATE DATABASE IF NOT EXISTS ${DB_NAME} ;
 CREATE USER IF NOT EXISTS '${DB_ADMN}'@'%' IDENTIFIED BY '${DB_ADMNPWD}' ;
 GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_ADMN}'@'%' ;
@@ -21,8 +23,10 @@ FLUSH PRIVILEGES ;
 EOF
 # Execute SQL commands
 mysql < /tmp/db.sql
+fi
 # Stop MySQL service
 # service mysql stop
 # Restart MySQL service
 # service mysql start
 # rc-service mariadb restart
+# exec mysqld_safe --datadir=/var/lib/mysql
