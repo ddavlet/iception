@@ -41,13 +41,13 @@
 define( 'DB_NAME', 'sql_db');
 
 /** Database username */
-define( 'DB_USER', 'ddavlety' );
+define( 'DB_USER', 'user1' );
 
 /** Database password */
-define( 'DB_PASSWORD', 'myP@ss1331' );
+define( 'DB_PASSWORD', 'myP@ss123' );
 
 /** Database hostname */
-define( 'DB_HOST', 'mariadb:3306' );
+define( 'DB_HOST', 'mariadb' );
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
@@ -97,6 +97,11 @@ $table_prefix = 'wp_';
  *
  * @link https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/
  */
+
+// define('WP_DEBUG', true);
+// define('WP_DEBUG_LOG', true);
+// define('WP_DEBUG_DISPLAY', false);
+
 define( 'WP_DEBUG', getenv('WP_DEBUG') );
 
 /* Add any custom values between this line and the "stop editing" line. */
