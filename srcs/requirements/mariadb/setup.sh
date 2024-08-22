@@ -10,6 +10,11 @@ if [ ! -d "/var/lib/mysql/ibdata1" ]; then
     mysql_install_db --datadir=/var/lib/mysql --user=mysql
 fi
 
+# Start MariaDB on background + wait to start
+/usr/bin/mysqld_safe --datadir=/var/lib/mysql --user=mysql &
+sleep 5  # Wait for MariaDB to fully start
+
+
 if [ ! -d "/var/lib/mysql/wordpress" ]; then
     cat << EOF > /tmp/db.sql
 # Delete test database
@@ -23,7 +28,8 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_RTPWD}' ;
 FLUSH PRIVILEGES ;
 EOF
 # Execute SQL commands
-/usr/bin/mysqld --user=mysql < /tmp/db.sql
+mysql -u root -p"${DB_RTPWD}" < /tmp/db.sql
+rm -f /tmp/db.sql
 fi
 # Stop MySQL service
 # service mysql stop
