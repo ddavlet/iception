@@ -9,8 +9,8 @@ services:
       - "443:443"
     networks:
       - net_inception
-    # secrets:
-    #   - server-certificate
+    depends_on:
+      - wordpress
     restart: on-failure:3
     volumes:
       - wordpress_data:/var/www/localhost/htdocs/wordpress #to be changed
@@ -19,6 +19,22 @@ services:
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
+      args:
+        DB_NAME: ${DB_NAME}
+        DB_ADMN: ${DB_ADMN}
+        DB_USER: ${DB_USER}
+        DB_USRPWD: ${DB_USRPWD}
+        DB_ADMNPWD: ${DB_ADMNPWD}
+        DB_RTPWD: ${DB_RTPWD}
+        WP_DEBUG: ${WP_DEBUG}
+        WP_AUTHKEY: ${WP_AUTHKEY}
+        WP_SECURE_AUTH_KEY: ${WP_SECURE_AUTH_KEY}
+        WP_LOGGED_IN_KEY: ${WP_LOGGED_IN_KEY}
+        WP_NONCE_KEY: ${WP_NONCE_KEY}
+        WP_AUTH_SALT: ${WP_AUTH_SALT}
+        WP_SECURE_AUTH_SALT: ${WP_SECURE_AUTH_SALT}
+        WP_LOGGED_IN_SALT: ${WP_LOGGED_IN_SALT}
+        WP_NONCE_SALT: ${WP_NONCE_SALT}
     env_file:
       - path: .env
         required: true
