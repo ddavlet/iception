@@ -23,7 +23,9 @@ services:
 
   wordpress:
     container_name: wordpress
-    build: ./requirements/wordpress
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
     env_file:
       - path: .env
         required: true
