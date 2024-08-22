@@ -28,7 +28,7 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_RTPWD}' ;
 FLUSH PRIVILEGES ;
 EOF
 # Execute SQL commands
-mysql -u root -p"${DB_RTPWD}" < /tmp/db.sql
+mysql < /tmp/db.sql
 rm -f /tmp/db.sql
 fi
 # Stop MySQL service

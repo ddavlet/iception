@@ -20,16 +20,34 @@
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', getenv('DB_NAME') );
+// define( 'DB_NAME', getenv('DB_NAME') );
+
+// /** Database username */
+// define( 'DB_USER', getenv('DB_ADMN') );
+
+// /** Database password */
+// define( 'DB_PASSWORD', getenv('DB_ADMNPWD') );
+
+// /** Database hostname */
+// define( 'DB_HOST', getenv('DB_HOST') );
+
+// /** Database charset to use in creating database tables. */
+// define( 'DB_CHARSET', 'utf8' );
+
+// /** The database collate type. Don't change this if in doubt. */
+// define( 'DB_COLLATE', '' );
+
+
+define( 'DB_NAME', 'sql_db');
 
 /** Database username */
-define( 'DB_USER', getenv('DB_USER') );
+define( 'DB_USER', 'ddavlety' );
 
 /** Database password */
-define( 'DB_PASSWORD', getenv('DB_USRPWD') );
+define( 'DB_PASSWORD', 'myP@ss1331' );
 
 /** Database hostname */
-define( 'DB_HOST', getenv('DB_HOST') );
+define( 'DB_HOST', 'mariadb:3306' );
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );

@@ -10,10 +10,6 @@ services:
       - "443:443"
     networks:
       - net_inception
-    depends_on:
-      - wordpress
-      - mariadb
-
     # secrets:
     #   - server-certificate
     restart: on-failure:3
@@ -29,6 +25,8 @@ services:
     env_file:
       - path: .env
         required: true
+    depends_on:
+      - mariadb
     networks:
       - net_inception
     restart: on-failure:3
