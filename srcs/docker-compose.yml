@@ -13,9 +13,6 @@ services:
     depends_on:
       - wordpress
       - mariadb
-    env_file:
-      - path: .env
-        required: true
 
     # secrets:
     #   - server-certificate
@@ -27,6 +24,9 @@ services:
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress
+    env_file:
+      - path: .env
+        required: true
     networks:
       - net_inception
     restart: on-failure:3

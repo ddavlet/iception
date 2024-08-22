@@ -47,8 +47,6 @@ EXPOSE 9000
 ENTRYPOINT ["/sbin/tini", "--"]
 
 # Define the healthcheck
-HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
-    CMD curl -f http://localhost:9000 || exit 1
 
 # Start PHP-FPM
 CMD ["php-fpm83", "-F"]
