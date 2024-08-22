@@ -4,9 +4,10 @@
 if [ ! -d "/var/lib/mysql/ibdata1" ]; then
     #set owenership of the folder
     chown -R mysql:mysql /var/lib/mysql
+	chown -R mysql:mysql /run/mysqld
     chmod 755 /var/lib/mysql
     #init mariadb settings, --rmp install mode for linux based systems
-    mysql_install_db --datadir=/var/lib/mysql --user=mysql --rpm
+    mysql_install_db --datadir=/var/lib/mysql --user=mysql
 fi
 
 if [ ! -d "/var/lib/mysql/wordpress" ]; then
@@ -22,7 +23,7 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_RTPWD}' ;
 FLUSH PRIVILEGES ;
 EOF
 # Execute SQL commands
-mysql < /tmp/db.sql
+/usr/bin/mysqld --user=mysql < /tmp/db.sql
 fi
 # Stop MySQL service
 # service mysql stop
