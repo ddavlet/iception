@@ -27,7 +27,7 @@ RUN curl -o /tmp/wordpress.tar.gz https://wordpress.org/latest.tar.gz \
 # Copy configuration files
 COPY php-fpm.conf /etc/php83/php-fpm.conf
 # COPY www.conf /etc/php83/php-fpm.d/www.conf
-COPY wp-config.php .
+COPY wp-config.php /var/www/localhost/htdocs/wordpress/
 
 # Set proper permissions for WordPress
 RUN adduser --system --ingroup www-data www-data \
