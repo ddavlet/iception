@@ -1,5 +1,4 @@
 # version: '2.28.1'
-name: inception
 
 services:
   wordpress:
@@ -7,20 +6,34 @@ services:
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
-      args:
-        DB_NAME: ${DB_NAME}
-        DB_USER: ${DB_USER}
-        DB_USRPWD: ${DB_USRPWD}
-        DB_RTPWD: ${DB_RTPWD}
-        WP_DEBUG: ${WP_DEBUG}
-        WP_AUTHKEY: ${WP_AUTHKEY}
-        WP_SECURE_AUTH_KEY: ${WP_SECURE_AUTH_KEY}
-        WP_LOGGED_IN_KEY: ${WP_LOGGED_IN_KEY}
-        WP_NONCE_KEY: ${WP_NONCE_KEY}
-        WP_AUTH_SALT: ${WP_AUTH_SALT}
-        WP_SECURE_AUTH_SALT: ${WP_SECURE_AUTH_SALT}
-        WP_LOGGED_IN_SALT: ${WP_LOGGED_IN_SALT}
-        WP_NONCE_SALT: ${WP_NONCE_SALT}
+      # args:
+      #   DB_NAME: ${DB_NAME}
+      #   DB_USER: ${DB_USER}
+      #   DB_USRPWD: ${DB_USRPWD}
+      #   DB_RTPWD: ${DB_RTPWD}
+      #   WP_DEBUG: ${WP_DEBUG}
+      #   WP_AUTHKEY: ${WP_AUTHKEY}
+      #   WP_SECURE_AUTH_KEY: ${WP_SECURE_AUTH_KEY}
+      #   WP_LOGGED_IN_KEY: ${WP_LOGGED_IN_KEY}
+      #   WP_NONCE_KEY: ${WP_NONCE_KEY}
+      #   WP_AUTH_SALT: ${WP_AUTH_SALT}
+      #   WP_SECURE_AUTH_SALT: ${WP_SECURE_AUTH_SALT}
+      #   WP_LOGGED_IN_SALT: ${WP_LOGGED_IN_SALT}
+      #   WP_NONCE_SALT: ${WP_NONCE_SALT}
+    secrets:
+      - db_name
+      - db_user
+      - db_usrpwd
+      - db_rtpwd
+      - wp_debug
+      - wp_authkey
+      - wp_secure_auth_key
+      - wp_logged_in_key
+      - wp_nonce_key
+      - wp_auth_salt
+      - wp_secure_auth_salt
+      - wp_logged_in_salt
+      - wp_nonce_salt
     depends_on:
       - mariadb
     networks:
@@ -69,3 +82,32 @@ volumes:
       o: bind
       type: none
       device: /home/${USER}/data/mariadb
+secrets:
+  db_name:
+    file: ./secrets/db_name.txt
+  db_user:
+    file: ./secrets/db_user.txt
+  db_usrpwd:
+    file: ./secrets/db_usrpwd.txt
+  db_rtpwd:
+    file: ./secrets/db_rtpwd.txt
+  db_host:
+    file: ./secrets/db_host.txt
+  wp_debug:
+    file: ./secrets/wp_debug.txt
+  wp_authkey:
+    file: ./secrets/wp_authkey.txt
+  wp_secure_auth_key:
+    file: ./secrets/wp_secure_auth_key.txt
+  wp_logged_in_key:
+    file: ./secrets/wp_logged_in_key.txt
+  wp_nonce_key:
+    file: ./secrets/wp_nonce_key.txt
+  wp_auth_salt:
+    file: ./secrets/wp_auth_salt.txt
+  wp_secure_auth_salt:
+    file: ./secrets/wp_secure_auth_salt.txt
+  wp_logged_in_salt:
+    file: ./secrets/wp_logged_in_salt.txt
+  wp_nonce_salt:
+    file: ./secrets/wp_nonce_salt.txt

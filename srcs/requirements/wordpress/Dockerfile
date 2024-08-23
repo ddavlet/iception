@@ -36,11 +36,12 @@ COPY wp-config-create.sh .
 # Set proper permissions for WordPress
 RUN adduser --system --ingroup www-data www-data \
     && chown -R www-data:www-data /var/www/localhost/htdocs/wordpress \
-	&& chmod -R 777 /var/www/localhost/htdocs/wordpress \
+	&& chmod -R 755 /var/www/localhost/htdocs/wordpress \
     && mkdir -p /var/log/php-fpm /run/php \
     && touch /var/log/php-fpm/error.log && touch /run/php/php-fpm.pid \
-    && sh wp-config-create.sh && chmod -R 777 /var/www/localhost/htdocs/wordpress/wp-content \
-	&& rm wp-config-create.sh
+    && sh wp-config-create.sh && chmod -R 755 /var/www/localhost/htdocs/wordpress/wp-content
+	# && rm wp-config-create.sh
+	# && chmod 440 /var/www/localhost/htdocs/wordpress/wp-config.php
 
 # Set the working directory
 WORKDIR /var/www/localhost/htdocs/wordpress
