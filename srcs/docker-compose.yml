@@ -2,6 +2,32 @@
 name: inception
 
 services:
+  wordpress:
+    container_name: wordpress
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+      args:
+        DB_NAME: ${DB_NAME}
+        DB_USER: ${DB_USER}
+        DB_USRPWD: ${DB_USRPWD}
+        DB_RTPWD: ${DB_RTPWD}
+        WP_DEBUG: ${WP_DEBUG}
+        WP_AUTHKEY: ${WP_AUTHKEY}
+        WP_SECURE_AUTH_KEY: ${WP_SECURE_AUTH_KEY}
+        WP_LOGGED_IN_KEY: ${WP_LOGGED_IN_KEY}
+        WP_NONCE_KEY: ${WP_NONCE_KEY}
+        WP_AUTH_SALT: ${WP_AUTH_SALT}
+        WP_SECURE_AUTH_SALT: ${WP_SECURE_AUTH_SALT}
+        WP_LOGGED_IN_SALT: ${WP_LOGGED_IN_SALT}
+        WP_NONCE_SALT: ${WP_NONCE_SALT}
+    depends_on:
+      - mariadb
+    networks:
+      - net_inception
+    restart: on-failure:3
+    volumes:
+      - wp-volume:/var/www/localhost/htdocs/wordpress
   nginx:
     container_name: nginx
     build: ./requirements/nginx
@@ -13,38 +39,7 @@ services:
       - wordpress
     restart: on-failure:3
     volumes:
-      - wordpress_data:/var/www/localhost/htdocs/wordpress #to be changed
-  wordpress:
-    container_name: wordpress
-    build:
-      context: ./requirements/wordpress
-      dockerfile: Dockerfile
-      args:
-        DB_NAME: ${DB_NAME}
-        DB_ADMN: ${DB_ADMN}
-        DB_USER: ${DB_USER}
-        DB_USRPWD: ${DB_USRPWD}
-        DB_ADMNPWD: ${DB_ADMNPWD}
-        DB_RTPWD: ${DB_RTPWD}
-        WP_DEBUG: ${WP_DEBUG}
-        WP_AUTHKEY: ${WP_AUTHKEY}
-        WP_SECURE_AUTH_KEY: ${WP_SECURE_AUTH_KEY}
-        WP_LOGGED_IN_KEY: ${WP_LOGGED_IN_KEY}
-        WP_NONCE_KEY: ${WP_NONCE_KEY}
-        WP_AUTH_SALT: ${WP_AUTH_SALT}
-        WP_SECURE_AUTH_SALT: ${WP_SECURE_AUTH_SALT}
-        WP_LOGGED_IN_SALT: ${WP_LOGGED_IN_SALT}
-        WP_NONCE_SALT: ${WP_NONCE_SALT}
-    env_file:
-      - path: .env
-        required: true
-    depends_on:
-      - mariadb
-    networks:
-      - net_inception
-    restart: on-failure:3
-    volumes:
-      - wordpress_data:/var/www/localhost/htdocs/wordpress
+      - wp-volume:/var/www/localhost/htdocs/wordpress
   mariadb:
     container_name: mariadb
     build:
@@ -52,26 +47,25 @@ services:
       dockerfile: Dockerfile
       args:
         DB_NAME: ${DB_NAME}
-        DB_ADMN: ${DB_ADMN}
         DB_USER: ${DB_USER}
         DB_USRPWD: ${DB_USRPWD}
-        DB_ADMNPWD: ${DB_ADMNPWD}
         DB_RTPWD: ${DB_RTPWD}
     networks:
       - net_inception
     restart: on-failure:3
-    secrets:
-      - mariadb-secrets
     volumes:
-      - db-data:/var/lib/mysql
+      - db-volume:/var/lib/mysql
 networks:
   net_inception:
     driver: bridge
-secrets:
-  mariadb-secrets:
-    file: ./requirements/mariadb/secrets.txt
 volumes:
-  db-data:
-    name: db-data
-  wordpress_data:
-    name: wp-data
+  wp-volume:
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/${USER}/data/wordpress
+  db-volume:
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/${USER}/data/mariadb

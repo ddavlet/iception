@@ -1,11 +1,11 @@
 #!/bin/sh
-cat <<EOF > '/var/www/localhost/htdocs/wordpress/wp-config.php'
+cat << EOF > '/var/www/localhost/htdocs/wordpress/wp-config.php'
 <?php
 define('DB_NAME',          '$DB_NAME');
 /** Database username */
-define('DB_USER',          '$DB_ADMN');
+define('DB_USER',          '$DB_USER');
 /** Database password */
-define('DB_PASSWORD',      '$DB_ADMNPWD');
+define('DB_PASSWORD',      '$DB_USRPWD');
 /** Database hostname */
 define('DB_HOST',          '$DB_HOST');
 define('AUTH_KEY',         '$WP_AUTHKEY');
@@ -23,4 +23,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', __DIR__ . '/' );
 }
 require_once ABSPATH . 'wp-settings.php';
+
 EOF
