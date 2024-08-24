@@ -1,22 +1,27 @@
 #!/bin/bash
 
+# Load the secrets from the files
+source /run/secrets/wp-secrets
+source /run/secrets/db-secrets
+
+# Create the wp-config.php file
 cat << eof > /var/www/localhost/htdocs/wordpress/wp-config.php
 <?php
-define('DB_NAME',          '$DB_NAME');
+define('DB_NAME',          '$database_name');
 /** Database username */
-define('DB_USER',          '$DB_USER');
+define('DB_USER',          '$user_name');
 /** Database password */
-define('DB_PASSWORD',      '$DB_USRPWD');
+define('DB_PASSWORD',      '$user_password');
 /** Database hostname */
-define('DB_HOST',          '$DB_HOST');
-define('AUTH_KEY',         '$WP_AUTHKEY');
-define('SECURE_AUTH_KEY',  '$WP_SECURE_AUTH_KEY');
-define('LOGGED_IN_KEY',    '$WP_LOGGED_IN_KEY');
-define('NONCE_KEY',        '$WP_NONCE_KEY');
-define('AUTH_SALT',        '$WP_AUTH_SALT');
-define('SECURE_AUTH_SALT', '$WP_SECURE_AUTH_SALT');
-define('LOGGED_IN_SALT',   '$WP_LOGGED_IN_SALT');
-define('NONCE_SALT',       '$WP_NONCE_SALT');
+define('DB_HOST',          '$database_host');
+define('AUTH_KEY',         '$auth_key');
+define('SECURE_AUTH_KEY',  '$secure_auth_key');
+define('LOGGED_IN_KEY',    '$logged_in_key');
+define('NONCE_KEY',        '$nonce_key');
+define('AUTH_SALT',        '$auth_salt');
+define('SECURE_AUTH_SALT', '$secure_auth_salt');
+define('LOGGED_IN_SALT',   '$logged_in_salt');
+define('NONCE_SALT',       '$nonce_salt');
 \$table_prefix = 'wp_';
 define( 'WP_DEBUG',        'false');
 
@@ -25,3 +30,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 require_once ABSPATH . 'wp-settings.php';
 eof
+
+php-fpm83 -F

@@ -20,7 +20,8 @@ RUN apk update && apk add --no-cache \
     php83-zip \
     libzip \
     tini \
-    curl
+    curl \
+    bash
 
 # Download and unpack WordPress
 RUN curl -o /tmp/wordpress.tar.gz https://wordpress.org/latest.tar.gz \
@@ -39,7 +40,8 @@ RUN adduser --system --ingroup www-data www-data \
 	&& chmod -R 755 /var/www/localhost/htdocs/wordpress \
     && mkdir -p /var/log/php-fpm /run/php \
     && touch /var/log/php-fpm/error.log && touch /run/php/php-fpm.pid \
-    && chmod +x /tmp/setup.sh && sh /tmp/setup.sh \
+    && chmod +x /tmp/setup.sh \
+    # && /bin/bash /tmp/setup.sh \
     && chmod -R 755 /var/www/localhost/htdocs/wordpress/wp-content
     # && mv /tmp/wp-config.php /var/www/localhost/htdocs/wordpress/wp-config.php
 	# && rm setup.sh
@@ -57,4 +59,4 @@ ENTRYPOINT ["/sbin/tini", "--"]
 # Define the healthcheck
 
 # Start PHP-FPM
-CMD ["php-fpm83", "-F"]
+CMD ["/tmp/setup.sh"]
