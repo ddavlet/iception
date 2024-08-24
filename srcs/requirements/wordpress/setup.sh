@@ -1,4 +1,5 @@
 #!/bin/bash
+
 cat << eof > /var/www/localhost/htdocs/wordpress/wp-config.php
 <?php
 define('DB_NAME',          '$DB_NAME');
@@ -16,9 +17,8 @@ define('AUTH_SALT',        '$WP_AUTH_SALT');
 define('SECURE_AUTH_SALT', '$WP_SECURE_AUTH_SALT');
 define('LOGGED_IN_SALT',   '$WP_LOGGED_IN_SALT');
 define('NONCE_SALT',       '$WP_NONCE_SALT');
+\$table_prefix = 'wp_';
 define( 'WP_DEBUG',        'false');
-
-
 
 if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', __DIR__ . '/' );
