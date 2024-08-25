@@ -14,7 +14,8 @@ fi
 sleep 5
 
 # Create SQL commands file
-cat << EOF > /tmp/db.sql
+if [ ! -d "/var/lib/mysql/${DB_NAME}" ]; then
+	cat << EOF > /tmp/db.sql
 # Delete test database
 DELETE FROM mysql.user WHERE User = '';
 DROP DATABASE IF EXISTS test;
@@ -24,14 +25,10 @@ GRANT ALL PRIVILEGES ON ${database_name}.* TO '${user_name}'@'%';
 ALTER USER 'root'@'localhost' IDENTIFIED BY '${root_password}';
 FLUSH PRIVILEGES;
 EOF
+fi
 
-# Execute SQL commands
 mysql < /tmp/db.sql
 
-# Clean up
 rm -f /tmp/db.sql
 
-# Restart MariaDB
-
-# Wait for MariaDB to fully start
 wait
