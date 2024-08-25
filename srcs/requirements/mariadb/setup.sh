@@ -2,10 +2,6 @@
 
 #if mysql (settings folder for mariadb) is not installed
 if [ ! -d "/var/lib/mysql/ibdata1" ]; then
-    #set owenership of the folder
-    chown -R mysql:mysql /var/lib/mysql
-	chown -R mysql:mysql /run/mysqld
-    chmod 755 /var/lib/mysql
     #init mariadb settings, --rmp install mode for linux based systems
     mysql_install_db --datadir=/var/lib/mysql --user=mysql
 fi
@@ -15,7 +11,7 @@ fi
 sleep 5  # Wait for MariaDB to fully start
 
 
-if [ ! -d "/var/lib/mysql/wordpress" ]; then
+if [ ! -d "/var/lib/mysql/${DB_NAME}" ]; then
     cat << EOF > /tmp/db.sql
 # Delete test database
 DELETE FROM mysql.user WHERE User = '';
