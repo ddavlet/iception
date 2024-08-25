@@ -8,16 +8,9 @@ up:
 down:
 	docker compose -f srcs/docker-compose.yml down
 clean: down
-	# docker system prune -af
-	# docker volume prune -af
-	# docker volume rm wp-volume
-	# docker volume rm db-volume
-	# rm -rf /home/${USER}/data
+	docker system prune -af
 
 fclean: down clean
-	# docker volume prune -af
-	# docker volume rm wp-volume
-	# docker volume rm db-volume
 	rm -rf /home/${USER}/data
 
 re: fclean up
