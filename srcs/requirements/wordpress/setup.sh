@@ -25,6 +25,13 @@ define('NONCE_SALT',       '$nonce_salt');
 \$table_prefix = 'wp_';
 define( 'WP_DEBUG',        'false');
 
+/** Redis setup */
+define('WP_REDIS_HOST', 'redis');
+define('WP_REDIS_PORT', 6379);
+/** Redis additional setup to prevent wordpress slow down*/
+define( 'WP_REDIS_TIMEOUT', 1 );
+define( 'WP_REDIS_READ_TIMEOUT', 1 );
+
 if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', __DIR__ . '/' );
 }

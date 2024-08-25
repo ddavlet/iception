@@ -1,4 +1,4 @@
-# Use the Alpine base image for NGINX
+# Use the Alpine base image for MariaDB
 FROM alpine:3.20.2
 
 #Add environmental variables as arguments
@@ -34,7 +34,7 @@ RUN /usr/bin/mysqld_safe --datadir=/var/lib/mysql --user=mysql &
 
 EXPOSE 3306
 
-# ENTRYPOINT ["/usr/bin/mysqld_safe", "--skip-log-error", "--datadir=/var/lib/mysql", "--user=mysql"]
+ENTRYPOINT ["tini", "--"]
 
 USER mysql
 

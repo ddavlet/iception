@@ -40,6 +40,28 @@ services:
       - db-volume:/var/lib/mysql
     secrets:
       - db-secrets
+  redis:
+    container_name: redis
+    build:
+      context: ./requirements/bonus/redis
+      dockerfile: Dockerfile
+    networks:
+      - net_inception
+    restart: on-failure:3
+  vsftpd:
+    container_name: ftp
+    build:
+      context: ./requirements/bonus/vsftpd
+      dockerfile: Dockerfile
+      args:
+        FTP_USR: ${FTP_USR}
+    networks:
+      - net_inception
+    restart: on-failure:3
+    volumes:
+      - wp-volume:/var/www/localhost/htdocs/wordpress
+    ports:
+      - "21:21"
 networks:
   net_inception:
     driver: bridge
@@ -49,15 +71,15 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /home/${USER}/data/wordpress
+      device: ~/data/wordpress
   db-volume:
     name: db-volume
     driver_opts:
       o: bind
       type: none
-      device: /home/${USER}/data/mariadb
+      device: ~/data/mariadb
 secrets:
   db-secrets:
-    file: ./secrets/db_secrets.txt
+    file: ../secrets/db_secrets.txt
   wp-secrets:
-    file: ./secrets/wp_secrets.txt
+    file: ../secrets/wp_secrets.txt

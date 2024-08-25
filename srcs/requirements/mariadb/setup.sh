@@ -14,7 +14,7 @@ fi
 sleep 5
 
 # Create SQL commands file
-if [ ! -d "/var/lib/mysql/${DB_NAME}" ]; then
+if [ ! -d "/var/lib/mysql/ibdata1" ]; then
 	cat << EOF > /tmp/db.sql
 # Delete test database
 DELETE FROM mysql.user WHERE User = '';
@@ -25,10 +25,10 @@ GRANT ALL PRIVILEGES ON ${database_name}.* TO '${user_name}'@'%';
 ALTER USER 'root'@'localhost' IDENTIFIED BY '${root_password}';
 FLUSH PRIVILEGES;
 EOF
-fi
 
 mysql < /tmp/db.sql
 
 rm -f /tmp/db.sql
+fi
 
 wait
