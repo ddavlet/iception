@@ -9,20 +9,6 @@ services:
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
-      args:
-        DB_NAME: ${DB_NAME}
-        DB_HOST: ${DB_HOST}
-        DB_USER: ${DB_USER}
-        DB_USRPWD: ${DB_USRPWD}
-        DB_RTPWD: ${DB_RTPWD}
-        WP_AUTHKEY: ${WP_AUTHKEY}
-        WP_SECURE_AUTH_KEY: ${WP_SECURE_AUTH_KEY}
-        WP_LOGGED_IN_KEY: ${WP_LOGGED_IN_KEY}
-        WP_NONCE_KEY: ${WP_NONCE_KEY}
-        WP_AUTH_SALT: ${WP_AUTH_SALT}
-        WP_SECURE_AUTH_SALT: ${WP_SECURE_AUTH_SALT}
-        WP_LOGGED_IN_SALT: ${WP_LOGGED_IN_SALT}
-        WP_NONCE_SALT: ${WP_NONCE_SALT}
     depends_on:
       - mariadb
     networks:
@@ -47,11 +33,6 @@ services:
     build:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
-      args:
-        DB_NAME: ${DB_NAME}
-        DB_USER: ${DB_USER}
-        DB_USRPWD: ${DB_USRPWD}
-        DB_RTPWD: ${DB_RTPWD}
     networks:
       - net_inception
     restart: on-failure:3
@@ -68,13 +49,13 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /Users/${USER}/data/wordpress
+      device: /home/${USER}/data/wordpress
   db-volume:
     name: db-volume
     driver_opts:
       o: bind
       type: none
-      device: /Users/${USER}/data/mariadb
+      device: /home/${USER}/data/mariadb
 secrets:
   db-secrets:
     file: ./secrets/db_secrets.txt
