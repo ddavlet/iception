@@ -50,7 +50,7 @@ services:
     restart: on-failure:3
     depends_on:
       - wordpress
-  sftp:
+  vsftpd:
     container_name: ftp
     build:
       context: ./requirements/bonus/vsftpd
@@ -66,6 +66,8 @@ services:
     ports:
       - "21:21"
       - "10000-10002:10000-10002"
+    secrets:
+      -ftp-secrets
   adminer:
     container_name: adminer
     build:
@@ -99,19 +101,19 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /home/root/data/wordpress
+      device: /Users/HP/data/wordpress
   db-volume:
     name: db-volume
     driver_opts:
       o: bind
       type: none
-      device: /home/root/data/mariadb
+      device: /Users/HP/data/mariadb
   bu-volume:
     name: backup
     driver_opts:
       o: bind
       type: none
-      device: /home/root/data/backup
+      device: /Users/HP/data/backup
 secrets:
   db-secrets:
     file: ../secrets/db_secrets.txt
@@ -119,3 +121,5 @@ secrets:
     file: ../secrets/wp_secrets.txt
   sr-secrets:
     file: ../secrets/restic_pwd.txt
+  ftp-secrets:
+    file: ../secrets/ftp_secrets.txt
