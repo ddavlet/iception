@@ -48,7 +48,9 @@ services:
     networks:
       - net_inception
     restart: on-failure:3
-  vsftpd:
+    depends_on:
+      - wordpress
+  sftp:
     container_name: ftp
     build:
       context: ./requirements/bonus/vsftpd
@@ -56,9 +58,6 @@ services:
       args:
         FTP_USR: ${FTP_USR}
         FTP_PWD: ${FTP_PWD}
-    # environment:
-    #   - FTP_PWD=${FTP_PWD}
-    #   - FTP_USR=${FTP_USR}
     networks:
       - net_inception
     restart: on-failure:3
@@ -75,6 +74,8 @@ services:
     networks:
       - net_inception
     restart: on-failure:3
+    depends_on:
+      - mariadb
   restic:
     container_name: restic
     build:
@@ -87,6 +88,8 @@ services:
       - bu-volume:/srv/restic-repo
     secrets:
       - sr-secrets
+    depends_on:
+      - wordpress
 networks:
   net_inception:
     driver: bridge
