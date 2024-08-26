@@ -30,7 +30,7 @@ RUN chmod +x /etc/setup.sh \
 
 # Expose the MariaDB port
 
-RUN /usr/bin/mysqld_safe --datadir=/var/lib/mysql --user=mysql &
+# RUN /usr/bin/mysqld_safe --datadir=/var/lib/mysql --user=mysql &
 
 EXPOSE 3306
 

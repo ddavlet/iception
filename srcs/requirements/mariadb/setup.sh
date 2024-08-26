@@ -11,7 +11,9 @@ fi
 
 # Start MariaDB in the background and wait for it to fully start
 /usr/bin/mysqld_safe --skip-log-error --datadir=/var/lib/mysql --user=mysql &
-sleep 5
+while ! mysqladmin ping --silent; do
+    sleep 3
+done
 
 # Create SQL commands file
 if [ ! -d "/var/lib/mysql/ibdata1" ]; then

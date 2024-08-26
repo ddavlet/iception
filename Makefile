@@ -6,10 +6,10 @@ up:
 down:
 	docker compose -f srcs/docker-compose.yml down
 clean: down
-	# docker system prune -af
+	docker system prune -af
 
 fclean: down clean
-	# docker volume prune -af
-	rm -rf ~/data
+	docker volume prune -f
+	rm -rf /home/root/data
 
 re: fclean up

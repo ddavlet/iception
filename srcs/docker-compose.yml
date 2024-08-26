@@ -55,6 +55,10 @@ services:
       dockerfile: Dockerfile
       args:
         FTP_USR: ${FTP_USR}
+        FTP_PWD: ${FTP_PWD}
+    # environment:
+    #   - FTP_PWD=${FTP_PWD}
+    #   - FTP_USR=${FTP_USR}
     networks:
       - net_inception
     restart: on-failure:3
@@ -62,6 +66,27 @@ services:
       - wp-volume:/var/www/localhost/htdocs/wordpress
     ports:
       - "21:21"
+      - "10000-10002:10000-10002"
+  adminer:
+    container_name: adminer
+    build:
+      context: ./requirements/bonus/adminer
+      dockerfile: Dockerfile
+    networks:
+      - net_inception
+    restart: on-failure:3
+  restic:
+    container_name: restic
+    build:
+      context: ./requirements/bonus/restic
+      dockerfile: Dockerfile
+    restart: on-failure:3
+    volumes:
+      - wp-volume:/var/data/wordpress
+      - db-volume:/var/data/mariadb
+      - bu-volume:/srv/restic-repo
+    secrets:
+      - sr-secrets
 networks:
   net_inception:
     driver: bridge
@@ -71,15 +96,23 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: ~/data/wordpress
+      device: /home/root/data/wordpress
   db-volume:
     name: db-volume
     driver_opts:
       o: bind
       type: none
-      device: ~/data/mariadb
+      device: /home/root/data/mariadb
+  bu-volume:
+    name: backup
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/root/data/backup
 secrets:
   db-secrets:
     file: ../secrets/db_secrets.txt
   wp-secrets:
     file: ../secrets/wp_secrets.txt
+  sr-secrets:
+    file: ../secrets/restic_pwd.txt
