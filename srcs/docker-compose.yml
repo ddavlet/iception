@@ -57,7 +57,6 @@ services:
       dockerfile: Dockerfile
       args:
         FTP_USR: ${FTP_USR}
-        FTP_PWD: ${FTP_PWD}
     networks:
       - net_inception
     restart: on-failure:3

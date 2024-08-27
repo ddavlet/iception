@@ -4,8 +4,4 @@ if [ ! -f "/srv/restic-repo/config" ]; then
 	sleep 25
 fi
 
-while true; do
-    restic -r /srv/restic-repo backup /var/data
-    sleep 200
-done
-
+crond -f

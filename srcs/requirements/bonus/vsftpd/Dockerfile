@@ -5,9 +5,6 @@ RUN apk update && apk upgrade \
 
 ARG FTP_USR
 
-# ENV FTP_USR=${FTP_USR}
-# ENV FTP_PWD=${FTP_PWD}
-
 RUN mkdir -p /var/www/localhost/htdocs/wordpress \
     && adduser -h /var/www/localhost/htdocs/wordpress -s /bin/false -D ${FTP_USR} \
     && chown ${FTP_USR}:${FTP_USR} -R /var/www/localhost/htdocs/wordpress \
