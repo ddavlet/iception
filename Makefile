@@ -12,6 +12,6 @@ clean_volumes:
 	docker volume ls -qf dangling=true | xargs -r docker volume rm
 
 fclean: down clean_dockers clean_volumes
-	rm -rf /Users/HP/data
+	rm -rf /home/root/data
 
 re: fclean up

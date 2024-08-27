@@ -1,15 +1,15 @@
 #!/bin/sh
 
 # Creating directories
-if [ ! -d "/Users/HP/data" ]; then
-	mkdir /Users/HP/data
+if [ ! -d "/home/root/data" ]; then
+	mkdir /home/root/data
 fi
-if [ ! -d "/Users/HP/data/mariadb" ]; then
-	mkdir /Users/HP/data/mariadb
+if [ ! -d "/home/root/data/mariadb" ]; then
+	mkdir /home/root/data/mariadb
 fi
-if [ ! -d "/Users/HP/data/wordpress" ]; then
-	mkdir /Users/HP/data/wordpress
+if [ ! -d "/home/root/data/wordpress" ]; then
+	mkdir /home/root/data/wordpress
 fi
-if [ ! -d "/Users/HP/data/backup" ]; then
-	mkdir /Users/HP/data/backup
+if [ ! -d "/home/root/data/backup" ]; then
+	mkdir /home/root/data/backup
 fi

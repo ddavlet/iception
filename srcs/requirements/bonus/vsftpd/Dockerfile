@@ -3,7 +3,7 @@ FROM alpine:3.20.2
 RUN apk update && apk upgrade \
     && apk add --no-cache vsftpd tini
 
-ARG FTP_USR FTP_PWD
+ARG FTP_USR
 
 # ENV FTP_USR=${FTP_USR}
 # ENV FTP_PWD=${FTP_PWD}
@@ -11,9 +11,7 @@ ARG FTP_USR FTP_PWD
 RUN mkdir -p /var/www/localhost/htdocs/wordpress \
     && adduser -h /var/www/localhost/htdocs/wordpress -s /bin/false -D ${FTP_USR} \
     && chown ${FTP_USR}:${FTP_USR} -R /var/www/localhost/htdocs/wordpress \
-    # && passwd -d ${FTP_USR} \
-    && adduser ${FTP_USR} root \
-    && echo "${FTP_USR}:${FTP_PWD}" | /usr/sbin/chpasswd
+    && adduser ${FTP_USR} root
 
 COPY vsftpd.conf /etc/vsftpd/
 

@@ -67,7 +67,7 @@ services:
       - "21:21"
       - "10000-10002:10000-10002"
     secrets:
-      -ftp-secrets
+      - ftp-secrets
   adminer:
     container_name: adminer
     build:
@@ -101,19 +101,19 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /Users/HP/data/wordpress
+      device: /home/root/data/wordpress
   db-volume:
     name: db-volume
     driver_opts:
       o: bind
       type: none
-      device: /Users/HP/data/mariadb
+      device: /home/root/data/mariadb
   bu-volume:
     name: backup
     driver_opts:
       o: bind
       type: none
-      device: /Users/HP/data/backup
+      device: /home/root/data/backup
 secrets:
   db-secrets:
     file: ../secrets/db_secrets.txt

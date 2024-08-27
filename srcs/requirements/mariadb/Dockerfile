@@ -1,9 +1,7 @@
 # Use the Alpine base image for MariaDB
 FROM alpine:3.20.2
 
-#Add environmental variables as arguments
-# ARG DB_NAME DB_USER DB_USRPWD DB_RTPWD
-
+# Install MariaDB and necessary packages
 RUN apk update && apk add --no-cache mariadb mariadb-client tini \
 	&& mkdir -p /var/lib/mysql /run/mysqld \
 	&& {   echo '[mysqld]'; \
@@ -16,27 +14,20 @@ RUN apk update && apk add --no-cache mariadb mariadb-client tini \
 # Copy file to docker machine
 COPY setup.sh /etc/
 
-# Install MariaDB and necessary packages
-
+# Set up directories
 RUN chmod +x /etc/setup.sh \
 	&& chown -R mysql:mysql /var/lib/mysql \
 	&& chown -R mysql:mysql /usr/lib/mariadb \
 	&& chown -R mysql:mysql /run/mysqld \
 	&& chmod -R 755 /var/lib/mysql \
-	&& chmod -R 755 /usr/lib/mariadb
-	# && bash /etc/setup.sh
+	&& chmod -R 755 /usr/lib/mariadb \
+	&& chmod -R 755 /run/mysqld/
 
-# Switch to mysql user
-
-# Expose the MariaDB port
-
-# RUN /usr/bin/mysqld_safe --datadir=/var/lib/mysql --user=mysql &
-
+# Expose the port of MariaDB
 EXPOSE 3306
 
+# Set entrypoint PID 1 as tini
 ENTRYPOINT ["tini", "--"]
 
-USER mysql
-
-# Start MariaDB server
+# Run starting up script
 CMD ["sh", "/etc/setup.sh"]

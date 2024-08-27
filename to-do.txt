@@ -2,4 +2,4 @@
 2. fix init script - creation of directories
 3. fix volume mounting
 4. dump database before restic
-5. make restic less frequent
+5. make restic without infinite loop

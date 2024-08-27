@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 
 # Load the secrets from the files
-source /run/secrets/wp-secrets
-source /run/secrets/db-secrets
+. /run/secrets/wp-secrets
+. /run/secrets/db-secrets
 
 # Create the wp-config.php file
 cat << eof > /var/www/localhost/htdocs/wordpress/wp-config.php

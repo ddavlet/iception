@@ -20,8 +20,7 @@ RUN apk update && apk add --no-cache \
     php83-zip \
     libzip \
     tini \
-    curl \
-    bash
+    curl
 
 # Download and unpack WordPress
 RUN curl -o /tmp/wordpress.tar.gz https://wordpress.org/latest.tar.gz \
