@@ -6,12 +6,12 @@ up:
 down:
 	docker compose -f srcs/docker-compose.yml down
 clean_dockers: down
-	docker system prune -af
+	docker system prune -af --volumes
 
 clean_volumes:
 	docker volume ls -qf dangling=true | xargs -r docker volume rm
+	rm -rf /Users/HP/data
 
 fclean: down clean_dockers clean_volumes
-	rm -rf /home/root/data
 
 re: fclean up

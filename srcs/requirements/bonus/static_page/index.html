@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inception Project</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Inception Project</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav>
+            <a href="#preamble">Preamble</a>
+            <a href="#introduction">Introduction</a>
+            <a href="#guidelines">General Guidelines</a>
+            <a href="#mandatory">Mandatory Part</a>
+            <a href="#bonus">Bonus Part</a>
+            <a href="#submission">Submission</a>
+            <a href="#feature">Features</a>
+        </nav>
+
+        <section id="preamble">
+            <h2>Preamble</h2>
+            <p>This document is a System Administration related exercise. Version: 3</p>
+        </section>
+
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p>This project aims to broaden your knowledge of system administration by using Docker. You will virtualize several Docker images, creating them in your new personal virtual machine.</p>
+        </section>
+
+        <section id="guidelines">
+            <h2>General Guidelines</h2>
+            <ul>
+                <li>This project needs to be done on a Virtual Machine.</li>
+                <li>All the files required for the configuration of your project must be placed in a <code>srcs</code> folder.</li>
+                <li>A Makefile is also required and must be located at the root of your directory. It must set up your entire application (i.e., it has to build the Docker images using <code>docker-compose.yml</code>).</li>
+                <li>This subject requires putting into practice concepts that, depending on your background, you may not have learned yet. Therefore, we advise you not to hesitate to read a lot of documentation related to Docker usage, as well as anything else you will find helpful in order to complete this assignment.</li>
+            </ul>
+        </section>
+
+        <section id="mandatory">
+            <h2>Mandatory Part</h2>
+            <p>This project consists in having you set up a small infrastructure composed of different services under specific rules. The whole project has to be done in a virtual machine. You have to use docker compose.</p>
+            <ul>
+                <li>Each Docker image must have the same name as its corresponding service.</li>
+                <li>Each service has to run in a dedicated container.</li>
+                <li>For performance matters, the containers must be built either from the penultimate stable version of Alpine or Debian. The choice is yours.</li>
+                <li>You also have to write your own Dockerfiles, one per service. The Dockerfiles must be called in your <code>docker-compose.yml</code> by your Makefile.</li>
+                <li>It means you have to build yourself the Docker images of your project. It is then forbidden to pull ready-made Docker images, as well as using services such as DockerHub (Alpine/Debian being excluded from this rule).</li>
+                <li>Your containers mustn’t be started with a command running an infinite loop. Thus, this also applies to any command used as entrypoint, or used in entrypoint scripts. The following are a few prohibited hacky patches: <code>tail -f</code>, <code>bash</code>, <code>sleep infinity</code>, <code>while true</code>.</li>
+            </ul>
+            <p>Your setup must include:</p>
+            <ul>
+                <li>A Docker container that contains NGINX with TLSv1.2 or TLSv1.3 only.</li>
+                <li>A Docker container that contains WordPress + php-fpm (it must be installed and configured) only without nginx.</li>
+                <li>A Docker container that contains MariaDB only without nginx.</li>
+                <li>A volume that contains your WordPress database.</li>
+                <li>A second volume that contains your WordPress website files.</li>
+                <li>A docker-network that establishes the connection between your containers. Your containers have to restart in case of a crash.</li>
+            </ul>
+            <p>Your containers should not use <code>network: host</code> or <code>--link</code>, and the network line must be present in your <code>docker-compose.yml</code> file.</p>
+        </section>
+
+        <section id="bonus">
+            <h2>Bonus Part</h2>
+            <p>The bonus part is aimed to be simple. A Dockerfile must be written for each extra service. Thus, each one of them will run inside its own container and will have, if necessary, its dedicated volume.</p>
+            <ul>
+                <li>Set up Redis cache for your WordPress website in order to properly manage the cache.</li>
+                <li>Set up an FTP server container pointing to the volume of your WordPress website.</li>
+                <li>Create a simple static website in a language of your choice except PHP (e.g., a showcase site or a site for presenting your resume).</li>
+                <li>Set up Adminer.</li>
+                <li>Set up a service of your choice that you think is useful. During the defense, you will have to justify your choice.</li>
+            </ul>
+            <p>The bonus part will only be assessed if the mandatory part is PERFECT. If you have not passed ALL the mandatory requirements, your bonus part will not be evaluated at all.</p>
+        </section>
+
+        <section id="submission">
+            <h2>Submission and Peer-Evaluation</h2>
+            <p>Turn in your assignment in your Git repository as usual. Only the work inside your repository will be evaluated during the defense. Don’t hesitate to double-check the names of your folders and files to ensure they are correct.</p>
+        </section>
+        <section id="feature">
+            <h2>Features</h2>
+            <div class="navigation-buttons">
+                <a href="features.html" class="button">View Project Features</a>
+        </section>
+        </div>
+    </div>
+</body>
+</html>

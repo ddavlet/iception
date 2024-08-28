@@ -91,6 +91,14 @@ services:
       - sr-secrets
     depends_on:
       - wordpress
+  static_page:
+    container_name: showcase
+    build:
+      context: ./requirements/bonus/static_page
+      dockerfile: Dockerfile
+    restart: on-failure:3
+    networks:
+      - net_inception
 networks:
   net_inception:
     driver: bridge
@@ -100,19 +108,19 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /home/root/data/wordpress
+      device: /Users/HP/data/wordpress
   db-volume:
     name: db-volume
     driver_opts:
       o: bind
       type: none
-      device: /home/root/data/mariadb
+      device: /Users/HP/data/mariadb
   bu-volume:
     name: backup
     driver_opts:
       o: bind
       type: none
-      device: /home/root/data/backup
+      device: /Users/HP/data/backup
 secrets:
   db-secrets:
     file: ../secrets/db_secrets.txt

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Features</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Project Features</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <section id="backup-service">
+            <h2>Backup Service: Restic</h2>
+            <p>For the backup solution, I chose <strong>restic</strong>. Restic is a fast, secure, and efficient backup program that offers features like encryption and deduplication. It’s an ideal choice for ensuring that data is safely backed up and can be restored when needed. This choice allows for robust data protection and easy recovery in case of any issues with the primary data.</p>
+            <p>During the defense, I'll explain how Restic’s capabilities align with the project’s needs and why it was the best fit. The backup process is crucial for ensuring data integrity and reliability, which is why it was a priority in this setup.</p>
+        </section>
+
+        <section id="security">
+            <h2>Security Measures</h2>
+            <p>Security is a critical aspect of this project. To enhance safety, I implemented the following measures:</p>
+            <ul>
+                <li><strong>Secrets Management:</strong> I used Docker secrets to manage sensitive information. This practice prevents hard-coding passwords or credentials in the Docker images, which minimizes the risk of exposing confidential data.</li>
+                <li><strong>Safe Entrypoint with Tini:</strong> Instead of relying on hacky solutions like `tail -f`, I used <strong>Tini</strong> as the entrypoint for containers. Tini is a small but powerful init system that handles process reaping and signal forwarding, ensuring a more robust and stable container runtime.</li>
+                <li><strong>No Hardcoded Passwords:</strong> I made sure that no passwords or sensitive information are included in the Dockerfiles or other configuration files. This approach is crucial for maintaining security and avoiding potential leaks.</li>
+                <li><strong>Environment Variables:</strong> I used environment variables and a `.env` file to manage configuration settings securely. This method keeps sensitive data out of source control and ensures that configurations can be easily adjusted without modifying the code.</li>
+            </ul>
+        </section>
+
+        <section id="networking">
+            <h2>Networking Setup</h2>
+            <p>In this project, I configured a Docker network to facilitate communication between containers. This setup is essential for maintaining isolated and secure interactions among services, preventing unauthorized access and ensuring smooth operation.</p>
+            <p>By avoiding the use of deprecated or insecure networking methods such as `network: host` or `--link`, I adhered to best practices and ensured that the network configuration is both modern and effective.</p>
+        </section>
+
+        <section id="docker-setup">
+            <h2>Docker Setup Details</h2>
+            <p>The Docker setup for this project includes multiple services running in their dedicated containers, each built from custom Dockerfiles. This approach guarantees that each service is tailored to its specific requirements and performs optimally.</p>
+            <p>Here’s a brief overview of the services included:</p>
+            <ul>
+                <li><strong>NGINX:</strong> Configured with TLSv1.2 or TLSv1.3 only, serving as the single entry point to the infrastructure.</li>
+                <li><strong>WordPress + php-fpm:</strong> A container running WordPress with php-fpm, optimized for performance and security.</li>
+                <li><strong>MariaDB:</strong> A container dedicated to running MariaDB, ensuring data management is handled separately from web services.</li>
+                <li><strong>Volumes:</strong> Two volumes are used – one for the WordPress database and another for website files, providing persistent storage and data isolation.</li>
+            </ul>
+        </section>
+
+        <section id="bonus-part">
+            <h2>Bonus Part</h2>
+            <p>In addition to the mandatory setup, I implemented several bonus features to enhance the project further:</p>
+            <ul>
+                <li><strong>Redis Cache:</strong> Set up a Redis cache to improve the performance and speed of the WordPress website by managing the cache more efficiently.</li>
+                <li><strong>FTP Server:</strong> Configured an FTP server container that connects to the volume of the WordPress website. This setup facilitates file transfers and management of website files.</li>
+                <li><strong>Static Website:</strong> Created a simple static website as an example of an additional service. This website is a showcase for presenting resumes or personal projects and is implemented using HTML and CSS.</li>
+                <li><strong>Adminer:</strong> Deployed Adminer, a lightweight database management tool, to manage MariaDB databases with ease.</li>
+                <li><strong>Additional Useful Service:</strong> Added restic app to back up all important data</li>
+            </ul>
+            <p>Each bonus feature was carefully selected to add value to the project, demonstrating not only technical skills but also creativity and practical problem-solving.</p>
+        </section>
+
+        <section id="structure">
+            <h2>Project Structure</h2>
+            <p>The project is organized with a clear and logical directory structure to facilitate development and management:</p>
+            <ul>
+                <li><strong>Makefile:</strong> Located at the root of the directory, it orchestrates the build process for Docker images and services.</li>
+                <li><strong>srcs/:</strong> Contains all the source files for Docker configurations and service definitions.</li>
+                <li><strong>srcs/requirements:</strong> Includes specific directories for each required service, such as NGINX, MariaDB, and WordPress, with their respective Dockerfiles and configurations.</li>
+                <li><strong>secrets/:</strong> Stores sensitive information like passwords and API keys securely, managed through Docker secrets.</li>
+                <li><strong>.env:</strong> Contains environment variables used for configuring services.</li>
+            </ul>
+            <p>This structure ensures that the project is modular, easy to navigate, and maintainable. Each component is clearly defined and organized, supporting efficient development and deployment.</p>
+        </section>
+        <section id="back"></section>
+            <div class="navigation-buttons">
+                <a href="index.html" class="button">Back to Overview</a>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
