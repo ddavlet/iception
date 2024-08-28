@@ -10,7 +10,7 @@ RUN mkdir -p /var/www/localhost/htdocs/wordpress \
     && chown ${FTP_USR}:${FTP_USR} -R /var/www/localhost/htdocs/wordpress \
     && adduser ${FTP_USR} root
 
-COPY vsftpd.conf /etc/vsftpd/
+COPY ./tools/vsftpd.conf /etc/vsftpd/
 
 EXPOSE 21
 EXPOSE 10000-10002

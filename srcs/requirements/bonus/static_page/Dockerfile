@@ -8,10 +8,10 @@ RUN apk update && apk add --no-cache nginx openssl tini && \
 ENTRYPOINT ["/sbin/tini", "--"]
 
 # Copy NGINX configuration file
-COPY nginx.conf /etc/nginx/http.d/default.conf
-COPY index.html /var/www/
-COPY features.html /var/www/
-COPY styles.css /var/www/
+COPY ./tools/nginx.conf /etc/nginx/http.d/default.conf
+COPY ./tools/index.html /var/www/
+COPY ./tools/features.html /var/www/
+COPY ./tools/styles.css /var/www/
 # Expose port 443 for HTTPS
 EXPOSE 4000
 

@@ -7,8 +7,8 @@ RUN mkdir -p /var/data/wordpress /var/data/mariadb \
     && chmod 0777 -R /var/data/wordpress \
     && chmod 0777 -R /var/data/mariadb
 
-COPY run.sh /run/
-COPY cronset /etc/cron.d/
+COPY ./tools/run.sh /run/
+COPY ./tools/cronset /etc/cron.d/
 
 RUN chmod +x /run/run.sh
 

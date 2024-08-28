@@ -12,9 +12,9 @@ RUN apk update && apk add --no-cache mariadb mariadb-client tini dcron \
 		sed -i "s|skip-networking|skip-networking=0|g" /etc/my.cnf.d/mariadb-server.cnf
 
 # Copy file to docker machine
-COPY setup.sh /etc/
-COPY backup.sh /etc/
-COPY cronset /etc/cron.d/
+COPY ./tools/setup.sh /etc/
+COPY ./tools/backup.sh /etc/
+COPY ./tools/cronset /etc/cron.d/
 
 # Set up directories
 RUN chmod +x /etc/setup.sh \

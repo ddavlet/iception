@@ -12,7 +12,7 @@ RUN apk update && apk add --no-cache nginx openssl tini && \
 ENTRYPOINT ["/sbin/tini", "--"]
 
 # Copy NGINX configuration file
-COPY nginx.conf /etc/nginx/http.d/default.conf
+COPY ./tools/nginx.conf /etc/nginx/http.d/default.conf
 
 # COPY index.php /var/www/localhost/htdocs/
 

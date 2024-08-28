@@ -27,7 +27,7 @@ async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 # Main function to check the port and send alert if down
 async def monitor_port(context: ContextTypes.DEFAULT_TYPE):
-    if not check_port("127.0.0.1", 443):
+    if not check_port("nginx", 443):
         await send_alert(context)
 
 # Set up the bot application

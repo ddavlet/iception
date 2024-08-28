@@ -1,0 +1,2 @@
+1. Add .dockeignore
+2. fix vsftpd
