@@ -2,7 +2,7 @@
 FROM alpine:3.20.2
 
 # Install MariaDB and necessary packages
-RUN apk update && apk add --no-cache mariadb mariadb-client tini \
+RUN apk update && apk add --no-cache mariadb mariadb-client tini dcron \
 	&& mkdir -p /var/lib/mysql /run/mysqld \
 	&& {   echo '[mysqld]'; \
 			echo 'skip-host-cache'; \
@@ -13,9 +13,13 @@ RUN apk update && apk add --no-cache mariadb mariadb-client tini \
 
 # Copy file to docker machine
 COPY setup.sh /etc/
+COPY backup.sh /etc/
+COPY cronset /etc/cron.d/
 
 # Set up directories
 RUN chmod +x /etc/setup.sh \
+	&& mkdir /var/lib/mysql/backup \
+	&& chmod +x /etc/backup.sh \
 	&& chown -R mysql:mysql /var/lib/mysql \
 	&& chown -R mysql:mysql /usr/lib/mariadb \
 	&& chown -R mysql:mysql /run/mysqld \

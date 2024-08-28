@@ -42,6 +42,10 @@ fi
 
 kill $(cat /var/lib/mysql/*.pid)
 
+crond -b -L /var/log/cron.log
+
+rm /var/lib/mysql/*.pid
+
 sleep 10
 
 /usr/bin/mysqld_safe --datadir=/var/lib/mysql --user=mysql

@@ -1,1 +1,2 @@
-*/3 * * * * restic -r /srv/restic-repo backup /var/data
+*/3 * * * * /usr/bin/restic -r /srv/wordpress_backup backup /var/data/wordpress
+0 /3 * * * /usr/bin/restic -r /srv/database_backup backup /var/data/mariadb/backup

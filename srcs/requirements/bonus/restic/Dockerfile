@@ -10,6 +10,8 @@ RUN mkdir -p /var/data/wordpress /var/data/mariadb \
 COPY run.sh /run/
 COPY cronset /etc/cron.d/
 
+RUN chmod +x /run/run.sh
+
 ENTRYPOINT ["tini", "--"]
 
 CMD ["sh", "/run/run.sh"]
