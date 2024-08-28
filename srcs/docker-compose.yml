@@ -99,6 +99,19 @@ services:
     restart: on-failure:3
     networks:
       - net_inception
+  notifier:
+    container_name: notifier
+    build:
+      context: ./requirements/bonus/notifier
+      dockerfile: Dockerfile
+    restart: on-failure:3
+    networks:
+      - net_inception
+    secrets:
+      - not-secrets
+    depends_on:
+      - nginx
+      - wordpress
 networks:
   net_inception:
     driver: bridge
@@ -130,3 +143,5 @@ secrets:
     file: ../secrets/restic_pwd.txt
   ftp-secrets:
     file: ../secrets/ftp_secrets.txt
+  not-secrets:
+    file: ../secrets/notif_secrets.txt
