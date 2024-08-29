@@ -11,6 +11,7 @@ RUN mkdir -p /var/www/localhost/htdocs/wordpress \
     && adduser ${FTP_USR} root
 
 COPY ./tools/vsftpd.conf /etc/vsftpd/
+COPY ./tools/start.sh /run/
 
 EXPOSE 21
 EXPOSE 10000-10002
@@ -19,4 +20,4 @@ WORKDIR /var/www/localhost/htdocs/wordpress
 
 ENTRYPOINT [ "tini", "--" ]
 
-CMD ["/usr/sbin/vsftpd", "/etc/vsftpd/vsftpd.conf"]
+CMD ["sh", "/run/start.sh"]
