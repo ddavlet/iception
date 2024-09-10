@@ -8,6 +8,12 @@ This project focuses on the use of **Docker** and **Docker Compose** to set up a
 - **WordPress**: CMS container.
 - **MariaDB**: Database management.
 - **Docker Compose**: Multi-container orchestration.
+**Bonus fetures**:
+- **Restic:** Database and Wordpress data backup
+- **FTP:** File transfer pointing to Wordpress files
+- **Adminer:** Database management tool
+- **Notifier:** Telegram bot notification if service is down
+- **Static page:** Static web page with information on subject and key features
 
 ## 🛠️ Getting Started
 1. Clone the repository:
